@@ -36,6 +36,16 @@ def uname_check(request):
     # 若数据库中存在则返回True
     return JsonResponse({'check':check_result})
 
+# 登陆验证
+def login_check(request):
+    post = request.POST
+    login_name = post.get("username")
+    login_pwd = post.get("pwd")
+    # 判断是否与数据库中相同
+    return HttpResponse('<script>alert(%s);alert(%s)</script>'%(login_name,login_pwd))
+    # 相同则登陆页面自动跳转到登陆页面（先判断用户名是否存在）
+
+    # 不同提示账号密码错误
 
 def register_handle(request):
     # 获取注册信息
