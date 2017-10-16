@@ -1,10 +1,10 @@
 # coding=utf-8
 
 from django.shortcuts import render,redirect;
-from django.http import HttpResponse;
+from django.http import HttpResponse,JsonResponse;
 from hashlib import sha1;
 from models import UserInfo;
-
+from django.views.decorators.csrf import csrf_exempt
 '''
 注册功能
 1.用户名是否唯一
@@ -28,8 +28,13 @@ def login(request):
     return render(request, 'df_user/login.html',{'title':title})
 
 
-def uname_check(request,test):
-    return HttpResponse('aaa')
+def uname_check(request):
+    # 获取用户输入uname
+    check_uname = request.POST.get('check_uname')
+    # 检验数据库中是否有相同uname
+    check_result = UserInfo.objects.filter(uname=check_uname).exists()
+    # 若数据库中存在则返回True
+    return JsonResponse({'check':check_result})
 
 
 def register_handle(request):

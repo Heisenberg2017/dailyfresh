@@ -24,17 +24,6 @@
 					<li>
 						<label>用户名:</label>
 						<input type="text" name="user_name" id="user_name">
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#user_name').change(function () {
-                                    alert('xxx')
-                                    $.post('uname_check/',{'test':123},function (dic) {
-										alert('这个地方出了问题')
-                                    })
-                                })
-
-                            })
-                        </script>
 						<span class="error_tip">提示信息</span>
 					</li>					
 					<li>

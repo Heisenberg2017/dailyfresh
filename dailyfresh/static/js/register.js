@@ -48,8 +48,21 @@ $(function(){
 		}
 		else
 		{
-			$('#user_name').next().hide();
-			error_name = false;
+			// 检查用户名是否已注册
+            $.post('uname_check/',{check_uname:$(user_name).val()},function (check) {
+				if(check.check == true){
+
+					$('#user_name').next().html('用户名已被使用')
+					$('#user_name').next().show();
+					error_name = true;
+
+				}
+				else{
+					$('#user_name').next().hide();
+					error_name = false;
+				}
+            });
+
 		}
 	}
 
