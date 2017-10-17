@@ -42,6 +42,27 @@ def login_check(request):
     login_name = post.get("username")
     login_pwd = post.get("pwd")
     # 判断是否与数据库中相同
+    check_result = UserInfo.objects.filter(uname=login_name).exists()
+    if check_result:
+        # 对用户输入密码进行加密
+        s1 = sha1()
+        s1.update(login_pwd)
+        login_pwd = s1.hexdigest()
+
+        check_pwd = UserInfo.objects.filter(uname=login_name).values('upwd')[0]['upwd']
+        # 验证密码是否正确
+        if check_pwd == login_pwd:
+            print('登陆成功')
+            request.session['myname']=login_name
+            return redirect('/user/index/')
+        # request.session['myname']
+        else:
+            print('密码错误')
+            # 用seeion
+    else:
+        print('用户名错误')
+
+
     return HttpResponse('<script>alert(%s);alert(%s)</script>'%(login_name,login_pwd))
     # 相同则登陆页面自动跳转到登陆页面（先判断用户名是否存在）
 
@@ -72,4 +93,3 @@ def register_handle(request):
 
     else:
         return redirect('/user/register/')
-    return HttpResponse('<script>alert("注册成功")</script>')
