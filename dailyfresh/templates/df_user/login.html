@@ -3,9 +3,32 @@
 {% block head %}
 <script>
 	$(function () {
-		$('#log_form').submit(function () {
+		$('#username').blur(function () {
+			$('#username').next().hide()
+        })
+		$('#pwd').blur(function () {
+			$('#pwd').next().hide()
+        })
+		if($.cookie('login_name')){
+		    alert('有')
+		}
+		else{
+			alert('无')
+		}
 
-    	})
+		$('#jizhu').click(function () {
+			alert($('#jizhu').prop('checked'))
+		    if($('#jizhu').prop('checked')){
+		        $.cookie('jizhu',true,{expires:7,path:'/'})
+				alert('1')
+			}
+			else{
+		        $.cookie('jizhu',false,{expires:7,path:'/'})
+				alert('0')
+			}
+        })
+		// 这里出了问题，无论cookie为何值，checkbox状态均不改变 10/18/21
+	    $('#jizhu').prop('checked',$.cookie('jizhu'))
     })
 </script>
 {% endblock head %}
@@ -25,15 +48,17 @@
 					<a href="/user/register/">立即注册</a>
 				</div>
 				<div class="form_input">
-					<!--登陆验证 js+ajax+py-->
-					<form id="log_form" action="login_handle/" method="post" autocomplete="off"  >
-						<input type="text" id="username" name="username" class="name_input" placeholder="请输入用户名">
+
+
+
+					<form id="log_form" action="/user/login/login_check/" method="post" autocomplete="off"  >
+						<input type="text" id="username" name="username" class="name_input" placeholder="请输入用户名" value={{login_name|default:""}} >
 						<div class="user_error">输入错误</div>
-						<input type="password" id="pwd" name="pwd" class="pass_input" placeholder="请输入密码">
+						<input type="password" id="pwd" name="pwd" class="pass_input" placeholder="请输入密码" value={{login_pwd|default:""}} >
 						<div class="pwd_error">输入错误</div>
 						<div class="more_input clearfix">
-							<input type="checkbox" name="">
-							<label>记住用户名</label>
+							<input id="jizhu" type="checkbox" name="jizhu">
+							<label >记住用户名</label>
 							<a href="#">忘记密码</a>
 						</div>
 						<input type="submit" value="登录" class="input_submit">
@@ -43,4 +68,10 @@
 		</div>
 	</div>
 
+{%if error_name %}
+					<script>
+						$('#username').next().show()
+						$('#pwd').next().show()
+					</script>
+					{%endif%}
 {% endblock body %}

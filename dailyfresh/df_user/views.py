@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.shortcuts import render,redirect;
-from django.http import HttpResponse,JsonResponse;
+from django.http import HttpResponse,JsonResponse,HttpResponseRedirect;
 from hashlib import sha1;
 from models import UserInfo;
 from django.views.decorators.csrf import csrf_exempt
@@ -42,6 +42,7 @@ def login_check(request):
     login_name = post.get("username")
     login_pwd = post.get("pwd")
     # 判断是否与数据库中相同
+    response = HttpResponseRedirect('/user/index/')
     check_result = UserInfo.objects.filter(uname=login_name).exists()
     if check_result:
         # 对用户输入密码进行加密
@@ -52,15 +53,26 @@ def login_check(request):
         check_pwd = UserInfo.objects.filter(uname=login_name).values('upwd')[0]['upwd']
         # 验证密码是否正确
         if check_pwd == login_pwd:
+            post = request.POST
+            jizhu = post.get('jizhu')
+            if jizhu:
+
+                response.set_cookie('login_name',login_name,None)
+                print('已经记住密码')
+            else:
+                response.set_cookie('login_name', '', max_age=-1)
+                pass
+
             print('登陆成功')
             request.session['myname']=login_name
-            return redirect('/user/index/')
-        # request.session['myname']
+            return response
         else:
             print('密码错误')
-            # 用seeion
+            content = {'title':'用户登陆','error_name':0,'error_pwd':1,'login_name':login_name,'login_pwd':login_pwd}
+            return render(request,'df_user/login.html',content)
     else:
-        print('用户名错误')
+        content = {'title': '用户登陆', 'error_name': 1, 'error_pwd': 0, 'login_name': login_name, 'login_pwd': login_pwd}
+        return render(request,'df_user/login.html',content)
 
 
     return HttpResponse('<script>alert(%s);alert(%s)</script>'%(login_name,login_pwd))
