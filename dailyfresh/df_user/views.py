@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect;
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect;
 from hashlib import sha1;
 from models import UserInfo;
+from datetime import *;
 from django.views.decorators.csrf import csrf_exempt
 '''
 注册功能
@@ -15,17 +16,22 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
-    return render(request, 'df_user/index.html')
+    myname = request.session.get('myname')
+    id = request.session.get('id')
+    return render(request, 'df_user/index.html',{'myname':myname,'id':id})
+# 主页
 
 
 def register(request):
     title = '天天生鲜-注册'
     return render(request, 'df_user/register.html',{'title':title})
+# 注册板块
 
 
 def login(request):
     title = '天天生鲜-登陆'
     return render(request, 'df_user/login.html',{'title':title})
+# 登陆板块
 
 
 def uname_check(request):
@@ -35,8 +41,9 @@ def uname_check(request):
     check_result = UserInfo.objects.filter(uname=check_uname).exists()
     # 若数据库中存在则返回True
     return JsonResponse({'check':check_result})
+# 用户名验证
 
-# 登陆验证
+
 def login_check(request):
     post = request.POST
     login_name = post.get("username")
@@ -51,34 +58,42 @@ def login_check(request):
         login_pwd = s1.hexdigest()
 
         check_pwd = UserInfo.objects.filter(uname=login_name).values('upwd')[0]['upwd']
+        login_id = UserInfo.objects.filter(uname=login_name)[0].id
         # 验证密码是否正确
         if check_pwd == login_pwd:
             post = request.POST
             jizhu = post.get('jizhu')
             if jizhu:
-
-                response.set_cookie('login_name',login_name,None)
+                # cookie未定义时间则关闭浏览器过期
+                response.set_cookie('login_name',login_name,None,datetime(2018,1,1))
                 print('已经记住密码')
             else:
                 response.set_cookie('login_name', '', max_age=-1)
-                pass
+                print('未成功记录密码')
 
             print('登陆成功')
+            # 存储session
             request.session['myname']=login_name
+            request.session['id'] = login_id
+            # 获取sessi
+            # id = request.session.get('id')
+            # 删除session
+            # del request.session['myname'],request.session['id']
             return response
         else:
             print('密码错误')
             content = {'title':'用户登陆','error_name':0,'error_pwd':1,'login_name':login_name,'login_pwd':login_pwd}
             return render(request,'df_user/login.html',content)
     else:
+        response.set_cookie('login_name', '', max_age=-1)
         content = {'title': '用户登陆', 'error_name': 1, 'error_pwd': 0, 'login_name': login_name, 'login_pwd': login_pwd}
         return render(request,'df_user/login.html',content)
 
-
-    return HttpResponse('<script>alert(%s);alert(%s)</script>'%(login_name,login_pwd))
     # 相同则登陆页面自动跳转到登陆页面（先判断用户名是否存在）
 
     # 不同提示账号密码错误
+# 登陆验证
+
 
 def register_handle(request):
     # 获取注册信息
@@ -105,3 +120,11 @@ def register_handle(request):
 
     else:
         return redirect('/user/register/')
+# 注册验证
+
+
+def user_center_info(request):
+    myname = request.session.get('myname')
+    id = request.session.get('id')
+    return render(request, 'df_user/user_center_info.html', {'myname': myname, 'id': id})
+# 用户中心

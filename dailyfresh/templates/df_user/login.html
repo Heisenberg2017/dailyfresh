@@ -9,26 +9,34 @@
 		$('#pwd').blur(function () {
 			$('#pwd').next().hide()
         })
-		if($.cookie('login_name')){
-		    alert('有')
-		}
-		else{
-			alert('无')
-		}
-
 		$('#jizhu').click(function () {
-			alert($('#jizhu').prop('checked'))
 		    if($('#jizhu').prop('checked')){
 		        $.cookie('jizhu',true,{expires:7,path:'/'})
-				alert('1')
 			}
 			else{
 		        $.cookie('jizhu',false,{expires:7,path:'/'})
-				alert('0')
 			}
         })
-		// 这里出了问题，无论cookie为何值，checkbox状态均不改变 10/18/21
-	    $('#jizhu').prop('checked',$.cookie('jizhu'))
+
+		/*
+		 问题:无论cookie为何值，checkbox状态均不改变 10/18/21
+		 解决时间：10/19/9
+		 cookie返回值中的true何false都是str类型的不能直接作为boolean参与判断
+		 check移除操作使用.pror时发现无效果，可能与JQuery版本有关，换成attr和removeAttr
+		 */
+		if($.cookie('jizhu')=='true'){
+		    $('#jizhu').attr('checked','checked');
+
+			if($.cookie('login_name')){
+			/*未完成功能：记住用户名
+			* 	此处已经获取记住用户名信息
+			* 1.input需要改写autocomplete已完成已用户名的呈现*/
+			}
+		}
+		else{
+		    $('#jizhu').removeAttr('checked');
+		}
+
     })
 </script>
 {% endblock head %}
@@ -52,12 +60,13 @@
 
 
 					<form id="log_form" action="/user/login/login_check/" method="post" autocomplete="off"  >
-						<input type="text" id="username" name="username" class="name_input" placeholder="请输入用户名" value={{login_name|default:""}} >
+						<input type="text" id="username" name="username" class="name_input" placeholder="请输入用户名"
+							   value="{{login_name|default:''}}">
 						<div class="user_error">输入错误</div>
-						<input type="password" id="pwd" name="pwd" class="pass_input" placeholder="请输入密码" value={{login_pwd|default:""}} >
+						<input type="password" id="pwd" name="pwd" class="pass_input" placeholder="请输入密码" value="{{login_pwd|default:''}}" >
 						<div class="pwd_error">输入错误</div>
 						<div class="more_input clearfix">
-							<input id="jizhu" type="checkbox" name="jizhu">
+							<input id="jizhu" type="checkbox" name="jizhu" checked="checked">
 							<label >记住用户名</label>
 							<a href="#">忘记密码</a>
 						</div>
@@ -68,7 +77,7 @@
 		</div>
 	</div>
 
-{%if error_name %}
+{%if error_name or error_pwd %}
 					<script>
 						$('#username').next().show()
 						$('#pwd').next().show()
