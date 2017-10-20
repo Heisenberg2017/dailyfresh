@@ -1,0 +1,22 @@
+{% extends 'base_foot_top.html' %}
+{% block body_frame%}
+    <div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="/static/images/logo.png"></a>
+        {%if page_style = 1%}
+        <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+        {%endif%}
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+        {%if page_style = 0%}
+        <div class="guest_cart fr">
+			<a href="#" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">0</div>
+		</div>
+        {%endif%}
+
+	</div>
+{% block search_frame%}
+{% endblock search_frame%}
+{% endblock body_frame%}

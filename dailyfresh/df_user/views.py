@@ -18,7 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     myname = request.session.get('myname')
     id = request.session.get('id')
-    return render(request, 'df_user/index.html',{'myname':myname,'id':id})
+    return render(request, 'df_goods/index.html',{'myname':myname,'id':id,'page_style':0})
 # 主页
 
 
