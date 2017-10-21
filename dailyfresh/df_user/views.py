@@ -15,13 +15,6 @@ from django.views.decorators.csrf import csrf_exempt
 '''
 
 
-def index(request):
-    myname = request.session.get('myname')
-    id = request.session.get('id')
-    return render(request, 'df_goods/index.html',{'myname':myname,'id':id,'page_style':0})
-# 主页
-
-
 def register(request):
     title = '天天生鲜-注册'
     return render(request, 'df_user/register.html',{'title':title})
@@ -49,7 +42,7 @@ def login_check(request):
     login_name = post.get("username")
     login_pwd = post.get("pwd")
     # 判断是否与数据库中相同
-    response = HttpResponseRedirect('/user/index/')
+    response = HttpResponseRedirect('/index/')
     check_result = UserInfo.objects.filter(uname=login_name).exists()
     if check_result:
         # 对用户输入密码进行加密
