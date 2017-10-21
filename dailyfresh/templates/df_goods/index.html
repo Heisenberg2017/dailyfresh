@@ -48,9 +48,10 @@
 			<h3 class="fl" id="model01">新鲜水果</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				{%for g in type01%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
+
 			</div>
 			<a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
 		</div>
@@ -74,8 +75,9 @@
 			<h3 class="fl" id="model02">海鲜水产</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">河虾</a>
-				<a href="#">扇贝</a>
+				{%for g in type11%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
 			</div>
 			<a href="#" class="goods_more fr">查看更多 ></a>
 		</div>
@@ -99,9 +101,9 @@
 			<h3 class="fl" id="model03">猪牛羊肉</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				{%for g in type21%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
 			</div>
 			<a href="#" class="goods_more fr">查看更多 ></a>
 		</div>
@@ -125,9 +127,9 @@
 			<h3 class="fl" id="model04">禽类蛋品</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				{%for g in type31%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
 			</div>
 			<a href="#" class="goods_more fr">查看更多 ></a>
 		</div>
@@ -151,9 +153,9 @@
 			<h3 class="fl" id="model05">新鲜蔬菜</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				{%for g in type41%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
 			</div>
 			<a href="#" class="goods_more fr">查看更多 ></a>
 		</div>
@@ -177,9 +179,9 @@
 			<h3 class="fl" id="model06">速冻食品</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				<a href="#">鲜芒</a>
-				<a href="#">加州提子</a>
-				<a href="#">亚马逊牛油果</a>
+				{%for g in type51%}
+				<a href="#">{{g.gtitle|slice:'10'}}...</a>
+				{%endfor%}
 			</div>
 			<a href="#" class="goods_more fr">查看更多 ></a>
 		</div>
