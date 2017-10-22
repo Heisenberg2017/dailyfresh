@@ -59,6 +59,18 @@ def list(request, tid, pindex, sort):
     }
     return render(request,'df_goods/list.html',content)
 
+
 def detail(request,gid):
-    return render(request,'df_goods/detail.html',{'page_style': 1})
+    good = GoodsInfo.objects.get(pk=int(gid))
+    typeinfo = TypeInfo.objects.get(pk=int(good.gtype_id))
+    news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
+    # 记录用户点击动作(有用户刷人气问题)
+    good.gclick = good.gclick + 1
+    good.save()
+
+    return render(request,'df_goods/detail.html',{
+        'page_style': 1,
+        'good':good,
+        'news':news,
+    })
 

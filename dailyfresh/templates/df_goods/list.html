@@ -14,7 +14,7 @@
 				<ul>
 					{%for goods in news%}
 					<li>
-						<a href="{{goods.id}}/"><img src="/static/{{goods.gpic}}"></a>
+						<a href="/index/{{goods.id}}/"><img src="/static/{{goods.gpic}}"></a>
 						<h4><a href="{{goods.id}}/">{{goods.gtitle}}</a></h4>
 						<div class="prize">￥{{goods.gprice}}</div>
 					</li>
@@ -39,8 +39,8 @@
 			<ul class="goods_type_list clearfix">
 				{%for goods in page%}
 				<li>
-					<a href="{{goods.id}}"><img src="/static/{{goods.gpic}}"></a>
-					<h4><a href="{{goods.id}}">{{goods.gtitle}}</a></h4>
+					<a href="/index/{{goods.id}}"><img src="/static/{{goods.gpic}}"></a>
+					<h4><a href="/index/{{goods.id}}">{{goods.gtitle}}</a></h4>
 					<div class="operate">
 						<span class="prize">{{goods.gprice}}</span>
 						<span class="unit">{{goods.gprice}}/{{goods.gunit}}</span>
