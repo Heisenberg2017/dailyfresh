@@ -47,15 +47,18 @@ def list(request, tid, pindex, sort):
         goods_list = GoodsInfo.objects.filter(gtype_id=int(tid)).order_by('-gclick')
 
     # 分页对象
-    paginator = Paginator(goods_list,'1')
+    paginator = Paginator(goods_list,'3')
     page = paginator.page(pindex)
-    # x = page.has_next();
-    # y = page.has_previous();
     content={
         'typeinfo':typeinfo,
         'news':news,
         'goods_list':goods_list,
-        'page':page
+        'page':page,
+        'sort':sort,
+        'page_style': 1,
     }
     return render(request,'df_goods/list.html',content)
+
+def detail(request,gid):
+    return render(request,'df_goods/detail.html',{'page_style': 1})
 

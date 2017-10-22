@@ -14,8 +14,8 @@
 				<ul>
 					{%for goods in news%}
 					<li>
-						<a href="#"><img src="/static/{{goods.gpic}}"></a>
-						<h4><a href="#">{{goods.gtitle}}</a></h4>
+						<a href="{{goods.id}}/"><img src="/static/{{goods.gpic}}"></a>
+						<h4><a href="{{goods.id}}/">{{goods.gtitle}}</a></h4>
 						<div class="prize">￥{{goods.gprice}}</div>
 					</li>
 					{%endfor%}
@@ -25,16 +25,22 @@
 
 		<div class="r_wrap fr clearfix">
 			<div class="sort_bar">
-				<a href="#" class="active">默认</a>
-				<a href="#">价格</a>
-				<a href="#">人气</a>
+				<a href="/index/list_{{typeinfo.id}}_1_1"
+				   {%if sort = '1'%}class="active"{%endif%}
+				>默认</a>
+				<a href="/index/list_{{typeinfo.id}}_1_2"
+				   {%if sort = '2'%}class="active"{%endif%}
+				>价格</a>
+				<a href="/index/list_{{typeinfo.id}}_1_3"
+				   {%if sort = '3'%}class="active"{%endif%}
+				>人气</a>
 			</div>
 
 			<ul class="goods_type_list clearfix">
 				{%for goods in page%}
 				<li>
-					<a href="detail.html"><img src="/static/{{goods.gpic}}"></a>
-					<h4><a href="detail.html">{{goods.gtitle}}</a></h4>
+					<a href="{{goods.id}}"><img src="/static/{{goods.gpic}}"></a>
+					<h4><a href="{{goods.id}}">{{goods.gtitle}}</a></h4>
 					<div class="operate">
 						<span class="prize">{{goods.gprice}}</span>
 						<span class="unit">{{goods.gprice}}/{{goods.gunit}}</span>
@@ -44,24 +50,25 @@
 				{%endfor%}
 			</ul>
 			<div class="pagenation">
-				{{page.has_next}}
-			{%for pages in page.paginator.page_range%}
+				{%if page.has_previous%}
+				<a href="/index/list_{{typeinfo.id}}_{{page.number|add:'-1'}}_{{sort}}">上一页</a>
+				{%endif%}
 
-				<a href="#" class="active">{{pages}}</a>
+				{%for pages in page.paginator.page_range%}
 
-			{%endfor%}
+				<a href="/index/list_{{typeinfo.id}}_{{pages}}_{{sort}}"
+				   {%if pages == page.number%}
+				   class="active"
+				   {%endif%}
+				>{{pages}}</a>
+
+				{%endfor%}
+
+				{%if page.has_next%}
+				<a href="/index/list_{{typeinfo.id}}_{{page.number|add:'1'}}_{{sort}}">下一页</a>
+				{%endif%}
+
 			</div>
-
-			<div class="pagenation">
-				<a href="#">上一页</a>
-				<a href="#" class="active">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">4</a>
-				<a href="#">5</a>
-				<a href="#">下一页></a>
-			</div>
-
 		</div>
 	</div>
 {% endblock%}
