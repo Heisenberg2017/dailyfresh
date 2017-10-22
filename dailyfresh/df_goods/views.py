@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from models import TypeInfo,GoodsInfo
+from django.core.paginator import *
 
 
 def index(request):
@@ -21,10 +22,6 @@ def index(request):
     type41 = typelist[4].goodsinfo_set.order_by('-gclick')[0:4]
     type5 = typelist[5].goodsinfo_set.order_by('-id')[0:4]
     type51 = typelist[5].goodsinfo_set.order_by('-gclick')[0:4]
-    for x in type0:
-        print x.gtitle
-    for y in type01:
-        print y.gtitle
     return render(request, 'df_goods/index.html',{
         'myname':myname,'id':id,'page_style':0,
         'type0':type0,'type01':type01,
@@ -34,5 +31,31 @@ def index(request):
         'type4': type4, 'type41': type41,
         'type5': type5, 'type51': type51,
     })
-# 主页
+
+
+def list(request, tid, pindex, sort):
+    # 最新的两条goods
+    typeinfo = TypeInfo.objects.get(pk=int(tid))
+    news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
+
+    # goods排序
+    if sort == '1':
+        goods_list = GoodsInfo.objects.filter(gtype_id=int(tid)).order_by('-id')
+    elif sort == '2':
+        goods_list = GoodsInfo.objects.filter(gtype_id=int(tid)).order_by('-gprice')
+    elif sort == '3':
+        goods_list = GoodsInfo.objects.filter(gtype_id=int(tid)).order_by('-gclick')
+
+    # 分页对象
+    paginator = Paginator(goods_list,'1')
+    page = paginator.page(pindex)
+    # x = page.has_next();
+    # y = page.has_previous();
+    content={
+        'typeinfo':typeinfo,
+        'news':news,
+        'goods_list':goods_list,
+        'page':page
+    }
+    return render(request,'df_goods/list.html',content)
 

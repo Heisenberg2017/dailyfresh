@@ -1,0 +1,28 @@
+{% extends 'base_search.html' %}
+{% block search_frame%}
+<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>
+				<span></span>
+				<ul class="subnav">
+					<li><a href="/index/list_1_1_1/" class="fruit">新鲜水果</a></li>
+					<li><a href="/index/list_2_1_1/" class="seafood">海鲜水产</a></li>
+					<li><a href="/index/list_3_1_1/" class="meet">猪牛羊肉</a></li>
+					<li><a href="/index/list_4_1_1/" class="egg">禽类蛋品</a></li>
+					<li><a href="/index/list_5_1_1/" class="vegetables">新鲜蔬菜</a></li>
+					<li><a href="/index/list_6_1_1/" class="ice">速冻食品</a></li>
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+{% block list_frame%}
+{% endblock%}
+{% endblock search_frame%}
