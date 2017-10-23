@@ -1,4 +1,30 @@
 {% extends 'df_goods/base.html' %}
+{% block head %}
+<script>
+	function add() {
+		$('#num_show').val(parseInt($('#num_show').val())+1)
+		$('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
+    }
+    function minus() {
+		$('#num_show').val(parseInt($('#num_show').val())-1)
+		if($('#num_show').val()==0){
+		    $('#num_show').val(1)
+		}
+		$('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
+    }
+    $(function () {
+		$('#num_show').blur(function () {
+			if($('#num_show').val()>0){
+			    $('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
+			}
+			else{
+			    $('#num_show').val(1)
+				$('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
+			}
+        })
+    })
+</script>
+{% endblock head %}
 {% block list_frame%}
 	<div class="breadcrumb">
 		<a href="#">全部分类</a>
@@ -15,18 +41,18 @@
 			<h3>{{good.gtitle}}</h3>
 			<p>{{good.gjianjie}}</p>
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em>{{good.gprice}}</em></span>
+				<span class="show_pirze">¥<em id="gprice">{{good.gprice}}</em></span>
 				<span class="show_unit">单  位：{{good.gunit}}</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1">
-					<a href="javascript:;" class="add fr">+</a>
-					<a href="javascript:;" class="minus fr">-</a>	
+					<input id="num_show" type="text" class="num_show fl" value="1">
+					<a href="javascript:add();" class="add fr">+</a>
+					<a href="javascript:minus();" class="minus fr">-</a>
 				</div> 
 			</div>
-			<div class="total">总价：<em>16.80元</em></div>
+			<div class="total">总价：<em id="gtotal">{{good.gprice}}</em><em>元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
