@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from models import TypeInfo,GoodsInfo
 from django.core.paginator import *
+from django.http import HttpResponse
 
 
 def index(request):
@@ -33,7 +34,7 @@ def index(request):
     })
 
 
-def list(request, tid, pindex, sort):
+def good_list(request, tid, pindex, sort):
     # 最新的两条goods
     typeinfo = TypeInfo.objects.get(pk=int(tid))
     news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
@@ -65,12 +66,30 @@ def detail(request,gid):
     typeinfo = TypeInfo.objects.get(pk=int(good.gtype_id))
     news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
     # 记录用户点击动作(有用户刷人气问题)
-    good.gclick = good.gclick + 1
+    good.gclick += 1
     good.save()
 
-    return render(request,'df_goods/detail.html',{
+    response = render(request, 'df_goods/detail.html', {
         'page_style': 1,
-        'good':good,
-        'news':news,
+        'good': good,
+        'news': news,
     })
+    # 最近浏览
+    goods_ids = request.COOKIES.get('goods_ids', '')
+    good_id = '%d' % good.id
+    if goods_ids != '':
+        goods_ids1 = goods_ids.split(',')
+        if goods_ids1.count(good_id) >= 1:
+            goods_ids1.remove(good_id)
+        if len(goods_ids1) >= 5:
+            del goods_ids1[0]
+        goods_ids1.insert(0,good_id)
+        goods_ids = ','.join(goods_ids1)
+    else:
+        goods_ids = good_id
 
+    response.set_cookie('goods_ids', goods_ids)
+
+
+
+    return response

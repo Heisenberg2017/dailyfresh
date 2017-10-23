@@ -9,12 +9,18 @@
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
 			<div class="fr">
 				<div class="login_info fl">
-					欢迎您：<em>{{myname}}</em>
+
+					欢迎您：<em>{{request.session.myname}}</em>
+					{%if request.session.id%}
+					<span>|</span>
+					<a href="/user/login_out/">退出</a>
+					{%endif%}
+
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="/user/login/">登录</a>
 					<span>|</span>
-					<a href="register.html">注册</a>
+					<a href="/user/register/">注册</a>
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
@@ -27,7 +33,7 @@
 			</div>
 		</div>
 	</div>
-{%if id%}
+{%if request.session.id%}
 <script>
 	$('.login_info').show()
 	$('.login_btn').hide()

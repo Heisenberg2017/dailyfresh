@@ -9,3 +9,5 @@ class UserInfo(models.Model):
     uaddress = models.CharField(max_length=100, default='')
     uyoubian = models.CharField(max_length=6, default='')
     yphone = models.CharField(max_length=11, default='')
+
+

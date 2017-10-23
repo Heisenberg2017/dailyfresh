@@ -5,7 +5,9 @@ from django.http import HttpResponse,JsonResponse,HttpResponseRedirect;
 from hashlib import sha1;
 from models import UserInfo;
 from datetime import *;
-from django.views.decorators.csrf import csrf_exempt
+import user_decorator;
+from df_goods.models import GoodsInfo;
+from django.views.decorators.csrf import csrf_exempt;
 '''
 注册功能
 1.用户名是否唯一
@@ -27,6 +29,11 @@ def login(request):
 # 登陆板块
 
 
+def login_out(request):
+    request.session.flush()
+    return render(request,'df_goods/index.html',{'page_style':0})
+
+
 def uname_check(request):
     # 获取用户输入uname
     check_uname = request.POST.get('check_uname')
@@ -41,8 +48,9 @@ def login_check(request):
     post = request.POST
     login_name = post.get("username")
     login_pwd = post.get("pwd")
-    # 判断是否与数据库中相同
-    response = HttpResponseRedirect('/index/')
+    # 如果cookie中有‘url’则跳转到之前记录的url,否则跳转到主页
+    response = HttpResponseRedirect(request.COOKIES.get('url','/index/'))
+    response.delete_cookie('url')
     check_result = UserInfo.objects.filter(uname=login_name).exists()
     if check_result:
         # 对用户输入密码进行加密
@@ -68,6 +76,7 @@ def login_check(request):
             # 存储session
             request.session['myname']=login_name
             request.session['id'] = login_id
+            # request.session.flush()
             # 获取sessi
             # id = request.session.get('id')
             # 删除session
@@ -75,11 +84,11 @@ def login_check(request):
             return response
         else:
             print('密码错误')
-            content = {'title':'用户登陆','error_name':0,'error_pwd':1,'login_name':login_name,'login_pwd':login_pwd}
+            content = {'title':'用户登陆','error_name':0,'error_pwd':1}
             return render(request,'df_user/login.html',content)
     else:
         response.set_cookie('login_name', '', max_age=-1)
-        content = {'title': '用户登陆', 'error_name': 1, 'error_pwd': 0, 'login_name': login_name, 'login_pwd': login_pwd}
+        content = {'title': '用户登陆', 'error_name': 1, 'error_pwd': 0}
         return render(request,'df_user/login.html',content)
 
     # 相同则登陆页面自动跳转到登陆页面（先判断用户名是否存在）
@@ -116,8 +125,15 @@ def register_handle(request):
 # 注册验证
 
 
+@user_decorator.login
 def user_center_info(request):
-    myname = request.session.get('myname')
-    id = request.session.get('id')
-    return render(request, 'df_user/user_center_info.html', {'myname': myname, 'id': id})
+    rec_bro = request.COOKIES.get('goods_ids', '')
+    rec_good =[]
+    rec_list = rec_bro.split(',')
+    if(rec_list !=''):
+        for good in rec_list:
+            print(good)
+            good_obj=GoodsInfo.objects.get(pk=int(good))
+            rec_good.append(good_obj)
+    return render(request, 'df_user/user_center_info.html',{'page_style':0,'rec_good':rec_good})
 # 用户中心

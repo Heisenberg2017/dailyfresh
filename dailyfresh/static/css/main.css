@@ -21,6 +21,17 @@ html,body{height:100%}
 	display:none;
 }
 
+.login_info a{
+	text-decoration: none;
+	color: #666;
+}
+
+.login_info span{
+	color:#cecece;
+	margin:0 10px;
+}
+
+
 .login_info em{color:#ff8800}
 
 .login_btn a,.user_link a{

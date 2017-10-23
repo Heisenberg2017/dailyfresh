@@ -15,7 +15,9 @@
     $(function () {
 		$('#num_show').blur(function () {
 			if($('#num_show').val()>0){
-			    $('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
+			    var num =parseInt($('#num_show').val())
+			    $('#gtotal').html((num*$('#gprice').html()).toFixed(2))
+				$('#num_show').val(num)
 			}
 			else{
 			    $('#num_show').val(1)
