@@ -2,10 +2,44 @@
 
 {% block head %}
     <script>
-        function add() {
-            $(this).next().val(parseInt($('.num_show').val())+1)
-            $(this).next().blur()
+        // 总计
+        function total() {
+            total1 = 0;
+            total_count = 0;
+            $('.col07').each(function () {
+                count = $(this).prev().find('input').val();
+                price = $(this).prev().prev().text();
+
+                total0 = parseFloat(count) * parseFolat(price);
+                $(this).text(total0.toFixed(2));
+                total1 += total0
+                total_count++
+            })
+            $('#total').text(total1.toFixed(2));
+            $('.total_count1').text(total_count)
+            // 全选全消
+            $('#check_all').click(function () {
+                state = $(this).prop('checked');
+                $(':checkbox:not(#check_all)').prop('checked', state)
+            })
         }
+        // 选择
+        $(':checkbox:not(#check_all)').click(function(){
+	        if($(':checked').length+1==$('checkbox').length){
+	            $('#check_all').prop('checked',true)
+            }else{
+	            $('#check_all').prop('checked',false)
+            }
+        })
+        $(':checkbox:not(#check_all)').click(function () {
+            if($(':checked:checked')){
+
+            }
+        })
+
+        //减少
+        //删除
+
         function minus() {
             $('.num_show').val(parseInt($('.num_show').val()) - 1)
             if ($('.num_show').val() == 0) {
@@ -15,15 +49,25 @@
         }
 
         $(function () {
+            //增加
+            $('.add').click(function () {
+
+                $(this).next().val(parseInt($(this).next().val())+1)
+                $(this).next().blur()
+            })
+            console.log($('.num_show'))
             $('.num_show').blur(function () {
-                if ($('.num_show').val() > 0 & $('.num_show').val()<100) {
-                    var num = parseInt($('.num_show').val())
-                    $('#gtotal').html((num * $('#gprice').html()).toFixed(2))
-                    $('.num_show').val(num)
+                alert('xx')
+                if ($(this).val() > 0 & $(this).val()<100) {
+                    var num = parseInt($(this).val())
+                    $(this).parent().parent().next().html((num*(parseFloat($(this).parent().parent().prev().html()))).toFixed(2))
+                    $(this).val(num)
+
                 }
                 else {
-                    $('.num_show').val(1)
-                    $('#gtotal').html(($('.num_show').val() * $('#gprice').html()).toFixed(2))
+                    $(this).val(1)
+
+                    $(this).html(($(this).val() * $(this).parent().parent().prev().html()).toFixed(2))
                 }
             })
         })
@@ -46,17 +90,17 @@
 	<ul class="cart_list_td clearfix">
 		<li class="col01"><input type="checkbox" name="" checked></li>
 		<li class="col02"><img src="/static/{{ cart.goods.gpic }}"></li>
-		<li class="col03">{{ cart.goods.gtitle }}<br><em id="gprice">{{ cart.goods.gprice }}</em><em>元/{{ cart.goods.gunit }}</em></li>
+		<li class="col03">{{ cart.goods.gtitle }}<br><em>{{ cart.goods.gprice }}</em><em>元/{{ cart.goods.gunit }}</em></li>
 		<li class="col04">{{ cart.goods.gunit }}</li>
-		<li class="col05">{{ cart.goods.gprice }}元</li>
+		<li class="col05">{{ cart.goods.gprice }}</li>
 		<li class="col06">
 			<div class="num_add">
-				<a href="javascript:add();" class="add fl">+</a>
-				<input type="text" id="num_show" class="num_show fl" value="{{ cart.count }}">
-				<a href="javascript:minus();" class="minus fl">-</a>
+				<a href="" onclick="return false" class="add fl">+</a>
+				<input type="text" class="num_show fl" value="{{ cart.count }}">
+				<a href="" onclick="return false" class="minus fl">-</a>
 			</div>
 		</li>
-		<li class="col07" id="gtotal">25.80元</li>
+        <li class="col07"></li>
 		<li class="col08"><a href="javascript:;">删除</a></li>
 	</ul>
     {% endfor %}
@@ -66,5 +110,9 @@
 		<li class="col03">合计(不含运费)：<span>¥</span><em>42.60</em><br>共计<b>2</b>件商品</li>
 		<li class="col04"><a href="place_order.html">去结算</a></li>
 	</ul>
-
+    <script>
+    $('.col07').each(function () {
+        $(this).prev().children().children('input').blur()
+    })
+    </script>
 {% endblock search_frame%}
