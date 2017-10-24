@@ -70,7 +70,7 @@ def detail(request,gid):
     good.save()
 
     response = render(request, 'df_goods/detail.html', {
-        'page_style': 1,
+        'page_style': 0,
         'good': good,
         'news': news,
     })
@@ -89,7 +89,4 @@ def detail(request,gid):
         goods_ids = good_id
 
     response.set_cookie('goods_ids', goods_ids)
-
-
-
     return response
