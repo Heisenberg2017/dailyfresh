@@ -3,73 +3,93 @@
 {% block head %}
     <script>
         // 总计
-        function total() {
-            total1 = 0;
-            total_count = 0;
-            $('.col07').each(function () {
+    function total() {
+        total1 = 0;
+        total_count = 0;
+        $('.col07').each(function () {
+            // 判断是否为列表已经勾选的商品对象
+            console.log($(this).parent().children(':first').children().prop('checked'))
+            if($(this).parent().children(':first').children().prop('checked')){
                 count = $(this).prev().find('input').val();
                 price = $(this).prev().prev().text();
 
-                total0 = parseFloat(count) * parseFolat(price);
+                total0 = parseFloat(count) * parseFloat(price);
                 $(this).text(total0.toFixed(2));
                 total1 += total0
                 total_count++
-            })
-            $('#total').text(total1.toFixed(2));
-            $('.total_count1').text(total_count)
+            }
+        })
+        $('#total').text(total1.toFixed(2));
+        $('.total_count1').text(total_count)
+    }
+
+        //删除
+
+        $(function () {
+
+
             // 全选全消
             $('#check_all').click(function () {
                 state = $(this).prop('checked');
                 $(':checkbox:not(#check_all)').prop('checked', state)
+                total()
             })
-        }
-        // 选择
-        $(':checkbox:not(#check_all)').click(function(){
-	        if($(':checked').length+1==$('checkbox').length){
-	            $('#check_all').prop('checked',true)
-            }else{
-	            $('#check_all').prop('checked',false)
-            }
-        })
-        $(':checkbox:not(#check_all)').click(function () {
-            if($(':checked:checked')){
 
-            }
-        })
+            // 勾选商品
+            $(':checkbox:not(#check_all)').click(function(){
+                if($(':checked').length+1==$(':checkbox').length){
+                    $('#check_all').prop('checked',true)
+                }else{
+                    $('#check_all').prop('checked',false)
+                }
+                if(!($(this).prop('checked'))){
+                    $('#check_all').prop('checked',false)
+                }
+                total()
+            })
 
-        //减少
-        //删除
 
-        function minus() {
-            $('.num_show').val(parseInt($('.num_show').val()) - 1)
-            if ($('.num_show').val() == 0) {
-                $('.num_show').val(1)
-            }
-            $('.num_show').blur()
-        }
-
-        $(function () {
             //增加
             $('.add').click(function () {
-
                 $(this).next().val(parseInt($(this).next().val())+1)
+
+                $.get('edit_'+$(this).parent().parent().val()+'_'+$(this).next().val(),function (data) {
+
+                })
+                
                 $(this).next().blur()
             })
-            console.log($('.num_show'))
+
+            // 减少
+            $('.minus').click(function () {
+                $(this).prev().val(parseInt($(this).prev().val()) - 1)
+                if ($(this).prev().val() == 0) {
+                $(this).prev().val(1)
+                }
+
+                $(this).prev().blur()
+
+            })
+
+            // input框失去焦点时重新单个商品计算总价
             $('.num_show').blur(function () {
-                alert('xx')
                 if ($(this).val() > 0 & $(this).val()<100) {
                     var num = parseInt($(this).val())
                     $(this).parent().parent().next().html((num*(parseFloat($(this).parent().parent().prev().html()))).toFixed(2))
                     $(this).val(num)
-
                 }
                 else {
                     $(this).val(1)
 
                     $(this).html(($(this).val() * $(this).parent().parent().prev().html()).toFixed(2))
                 }
+                    total()
             })
+            //页面初始化的时候重置.col7
+            $('#num_show').blur()
+
+            //删除
+
         })
     </script>
 {% endblock head %}
@@ -87,16 +107,16 @@
 		<li class="col06">操作</li>
 	</ul>
     {% for cart in cart %}
-	<ul class="cart_list_td clearfix">
+	<ul class="cart_list_td clearfix" >
 		<li class="col01"><input type="checkbox" name="" checked></li>
 		<li class="col02"><img src="/static/{{ cart.goods.gpic }}"></li>
 		<li class="col03">{{ cart.goods.gtitle }}<br><em>{{ cart.goods.gprice }}</em><em>元/{{ cart.goods.gunit }}</em></li>
 		<li class="col04">{{ cart.goods.gunit }}</li>
 		<li class="col05">{{ cart.goods.gprice }}</li>
-		<li class="col06">
+		<li class="col06" value="{{ cart.id }}">
 			<div class="num_add">
 				<a href="" onclick="return false" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ cart.count }}">
+				<input id="num_show" type="text" class="num_show fl" value="{{ cart.count }}">
 				<a href="" onclick="return false" class="minus fl">-</a>
 			</div>
 		</li>
@@ -105,14 +125,9 @@
 	</ul>
     {% endfor %}
 	<ul class="settlements">
-		<li class="col01"><input type="checkbox" name="" checked=""></li>
+		<li class="col01"><input id="check_all" type="checkbox" name="" checked=""></li>
 		<li class="col02">全选</li>
-		<li class="col03">合计(不含运费)：<span>¥</span><em>42.60</em><br>共计<b>2</b>件商品</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em id="total" >42.60</em><br>共计<b class="total_count1">2</b>件商品</li>
 		<li class="col04"><a href="place_order.html">去结算</a></li>
 	</ul>
-    <script>
-    $('.col07').each(function () {
-        $(this).prev().children().children('input').blur()
-    })
-    </script>
 {% endblock search_frame%}

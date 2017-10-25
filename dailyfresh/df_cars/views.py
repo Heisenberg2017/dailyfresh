@@ -24,7 +24,7 @@ def add(request, gid, count):
     carts = CarInfo.objects.filter(user_id=uid, goods_id=gid)
     if len(carts) >= 1:
         cart = carts[0]
-        cart.count = cart.count + count
+        cart.count += count
     else:
         cart = CarInfo()
         cart.user_id = uid
@@ -37,3 +37,26 @@ def add(request, gid, count):
         return JsonResponse({'count': count})
     else:
         return redirect('/carts/')
+
+
+def edit(request,cart_id,count):
+    print('cart_id:%s'%cart_id)
+    print('count:%s' % count)
+    try:
+        cart=CarInfo.objects.get(pk=int(cart_id))
+        count1 = cart.count=int(count)
+        cart.save()
+        data = {'ok': 1}
+    except Exception as e:
+        data={'ok':count1}
+    return JsonResponse(data)
+
+
+def delete(request,cart_id):
+    try:
+        cart=CarInfo.objects.get(pk=int(cart_id))
+        cart.delete()
+        data={'ok':1}
+    except Exception as e:
+        data={'ok':0}
+    return JsonResponse(data)
