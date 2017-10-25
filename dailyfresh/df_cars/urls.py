@@ -5,5 +5,5 @@ urlpatterns = [
     url(r'^$', views.carts),
     url(r'^(\d+)_(\d+)/$', views.add),
     url(r'^edit_(\d+)_(\d+)/$', views.edit),
-    url(r'^delete_(\d+)_(\d+)/$', views.delete),
+    url(r'^delete_(\d+)/$', views.delete),
 ]

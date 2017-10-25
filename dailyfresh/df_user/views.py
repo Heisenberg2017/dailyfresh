@@ -31,7 +31,8 @@ def login(request):
 
 def login_out(request):
     request.session.flush()
-    return render(request,'df_goods/index.html',{'page_style':0})
+    response = HttpResponseRedirect('/index/')
+    return response
 
 
 def uname_check(request):

@@ -11,6 +11,7 @@ def index(request):
     id = request.session.get('id')
 
     typelist = TypeInfo.objects.all()
+
     type0 = typelist[0].goodsinfo_set.order_by('-id')[0:4]
     type01 = typelist[0].goodsinfo_set.order_by('-gclick')[0:4]
     type1 = typelist[1].goodsinfo_set.order_by('-id')[0:4]

@@ -2,7 +2,7 @@
 
 {% block head %}
     <script>
-        // 总计
+        // 总计(每次调用total方法都会重新计算单个商品总价,如果值变更单个商品则多出很多不必要的计算)
     function total() {
         total1 = 0;
         total_count = 0;
@@ -14,6 +14,7 @@
                 price = $(this).prev().prev().text();
 
                 total0 = parseFloat(count) * parseFloat(price);
+                // 计算单个商品总价
                 $(this).text(total0.toFixed(2));
                 total1 += total0
                 total_count++
@@ -22,8 +23,6 @@
         $('#total').text(total1.toFixed(2));
         $('.total_count1').text(total_count)
     }
-
-        //删除
 
         $(function () {
 
@@ -52,12 +51,17 @@
             //增加
             $('.add').click(function () {
                 $(this).next().val(parseInt($(this).next().val())+1)
+                $.get('edit_'+$(this).parent().parent().val()+'_'+$(this).next().val()+'/',function (data) {
+                    // True表示添加进数据库成功
+                    if(data.ok==0){
+                        total()
+                    }
+                    else{
 
-                $.get('edit_'+$(this).parent().parent().val()+'_'+$(this).next().val(),function (data) {
-
+                    }
                 })
-                
-                $(this).next().blur()
+                // $(this).next().blur()
+
             })
 
             // 减少
@@ -67,28 +71,59 @@
                 $(this).prev().val(1)
                 }
 
-                $(this).prev().blur()
+                // $(this).prev().blur()
+                $.get('edit_'+$(this).parent().parent().val()+'_'+$(this).prev().val()+'/',function (data) {
+                    // True表示添加进数据库成功
+                    if(data.ok==0){
+                        total()
+                    }
+                    else{
 
+                    }
+                })
+            })
+
+            // 删除
+            $('.col08').click(function () {
+                $.get('delete_'+$(this).prev().prev().val()+'/',function (data) {
+                    // True表示添加进数据库成功
+                    if(data.ok==1){
+
+                        $('ul').remove('#'+data.cart_id)
+                        total()
+                    }
+                    else{
+
+                    }
+
+                })
             })
 
             // input框失去焦点时重新单个商品计算总价
             $('.num_show').blur(function () {
                 if ($(this).val() > 0 & $(this).val()<100) {
                     var num = parseInt($(this).val())
-                    $(this).parent().parent().next().html((num*(parseFloat($(this).parent().parent().prev().html()))).toFixed(2))
-                    $(this).val(num)
+                    // $(this).parent().parent().next().html((num*(parseFloat($(this).parent().parent().prev().html()))).toFixed(2))
+                    // $(this).val(num)
                 }
                 else {
                     $(this).val(1)
 
-                    $(this).html(($(this).val() * $(this).parent().parent().prev().html()).toFixed(2))
+                    // $(this).html(($(this).val() * $(this).parent().parent().prev().html()).toFixed(2))
                 }
-                    total()
+                 $.get('edit_'+$(this).parent().parent().val()+'_'+$(this).val()+'/',function (data) {
+                    // True表示添加进数据库成功
+                    if(data.ok==0){
+                        total()
+                    }
+                    else{
+
+                    }
+
+                })
             })
             //页面初始化的时候重置.col7
-            $('#num_show').blur()
-
-            //删除
+            total()
 
         })
     </script>
@@ -107,7 +142,7 @@
 		<li class="col06">操作</li>
 	</ul>
     {% for cart in cart %}
-	<ul class="cart_list_td clearfix" >
+	<ul class="cart_list_td clearfix" id="{{ cart.id }}">
 		<li class="col01"><input type="checkbox" name="" checked></li>
 		<li class="col02"><img src="/static/{{ cart.goods.gpic }}"></li>
 		<li class="col03">{{ cart.goods.gtitle }}<br><em>{{ cart.goods.gprice }}</em><em>元/{{ cart.goods.gunit }}</em></li>

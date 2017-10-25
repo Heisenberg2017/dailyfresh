@@ -1,9 +1,11 @@
 # coding=utf-8
 from django.shortcuts import render,redirect
+
+from df_user import user_decorator
 from models import *
 from django.http import JsonResponse
 
-
+@user_decorator.login
 def carts(request):
 
     uid = request.session['id']
@@ -46,17 +48,18 @@ def edit(request,cart_id,count):
         cart=CarInfo.objects.get(pk=int(cart_id))
         count1 = cart.count=int(count)
         cart.save()
-        data = {'ok': 1}
+        data = {'ok': 0}
     except Exception as e:
         data={'ok':count1}
     return JsonResponse(data)
 
 
 def delete(request,cart_id):
+    print('cart_id:%s' % cart_id)
     try:
         cart=CarInfo.objects.get(pk=int(cart_id))
         cart.delete()
-        data={'ok':1}
+        data={'ok':1,'cart_id':cart_id}
     except Exception as e:
         data={'ok':0}
     return JsonResponse(data)

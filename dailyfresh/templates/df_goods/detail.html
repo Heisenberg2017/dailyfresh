@@ -2,9 +2,6 @@
 {% block head %}
 <script>
 
-
-
-
 	function add() {
 		$('#num_show').val(parseInt($('#num_show').val())+1)
 		$('#gtotal').html(($('#num_show').val()*$('#gprice').html()).toFixed(2))
@@ -107,6 +104,12 @@
 		var $to_y = $('#show_count').offset().left;
 
         $('#add_cart').click(function(){
+            // indexOf索引登陆两个字的时候会返回False
+            if($('#check_register').css('display')=='block') {
+                alert('请先登录后再购买');
+                location.href = '/user/login/';
+                return;
+            }
 		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
 
 
@@ -120,7 +123,7 @@
 					});
 			});
 
-            $.getJSON('/carts/{{ good.id }}'+'_'+$('#num_show').val(),function (data) {
+            $.get('/carts/{{ good.id }}'+'_'+$('#num_show').val(),function (data) {
                 $('#show_count').html(data.count);
             })
 
