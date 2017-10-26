@@ -141,9 +141,10 @@
 		<li class="col05">小计</li>
 		<li class="col06">操作</li>
 	</ul>
+    <form action="/order/order_handle/" method="GET">
     {% for cart in cart %}
 	<ul class="cart_list_td clearfix" id="{{ cart.id }}">
-		<li class="col01"><input type="checkbox" name="" checked></li>
+		<li class="col01"><input type="checkbox" name="cart_id" checked="" value="{{ cart.id }}"></li>
 		<li class="col02"><img src="/static/{{ cart.goods.gpic }}"></li>
 		<li class="col03">{{ cart.goods.gtitle }}<br><em>{{ cart.goods.gprice }}</em><em>元/{{ cart.goods.gunit }}</em></li>
 		<li class="col04">{{ cart.goods.gunit }}</li>
@@ -159,10 +160,14 @@
 		<li class="col08"><a href="javascript:;">删除</a></li>
 	</ul>
     {% endfor %}
+
 	<ul class="settlements">
 		<li class="col01"><input id="check_all" type="checkbox" name="" checked=""></li>
 		<li class="col02">全选</li>
 		<li class="col03">合计(不含运费)：<span>¥</span><em id="total" >42.60</em><br>共计<b class="total_count1">2</b>件商品</li>
-		<li class="col04"><a href="place_order.html">去结算</a></li>
+		<li class="col04"><input type="submit" value="去结算"></li>
+
+
 	</ul>
+    </form>
 {% endblock search_frame%}

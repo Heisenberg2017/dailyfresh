@@ -131,9 +131,8 @@ def user_center_info(request):
     rec_bro = request.COOKIES.get('goods_ids', '')
     rec_good =[]
     rec_list = rec_bro.split(',')
-    if(rec_list !=''):
+    if(rec_list !=['']):
         for good in rec_list:
-            print(good)
             good_obj=GoodsInfo.objects.get(pk=int(good))
             rec_good.append(good_obj)
     return render(request, 'df_user/user_center_info.html',{'page_style':0,'rec_good':rec_good})
