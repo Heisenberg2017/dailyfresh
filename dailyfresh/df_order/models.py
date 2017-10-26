@@ -12,6 +12,6 @@ class OrderInfo(models.Model):
 
 class OrderDetailInfo(models.Model):
     goods = models.ForeignKey('df_goods.GoodsInfo')
-    order = models.ForeignKey(OrderInfo)
+    order = models.ForeignKey('OrderInfo')
     price = models.DecimalField(max_digits=5,decimal_places=2)
     count = models.IntegerField()

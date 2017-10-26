@@ -23,4 +23,4 @@ class GoodsInfo(models.Model):
     gjanjie = models.CharField(max_length=200)
     gkucun = models.IntegerField()
     gcontent = HTMLField()
-    gtype = models.ForeignKey(TypeInfo)
+    gtype = models.ForeignKey('TypeInfo')

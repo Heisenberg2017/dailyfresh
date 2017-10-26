@@ -141,7 +141,7 @@
 		<li class="col05">小计</li>
 		<li class="col06">操作</li>
 	</ul>
-    <form action="/order/order_handle/" method="GET">
+    <form action="/order/" method="GET">
     {% for cart in cart %}
 	<ul class="cart_list_td clearfix" id="{{ cart.id }}">
 		<li class="col01"><input type="checkbox" name="cart_id" checked="" value="{{ cart.id }}"></li>

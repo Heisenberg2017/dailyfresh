@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^register/uname_check/$', views.uname_check),
     url(r'^login/login_check/$', views.login_check),
     url(r'^user_center_info/$', views.user_center_info),
+    url(r'^order/$', views.user_center_order),
+
 ]

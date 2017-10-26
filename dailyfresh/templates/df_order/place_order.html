@@ -38,7 +38,7 @@
 		</ul>
 
         {% for cart in carts_obj %}
-		<ul class="goods_list_td clearfix">
+		<ul class="goods_list_td clearfix" id="{{ cart.id }}">
 
 			<li class="col01"></li>
 			<li class="col02"><img src="/static/{{ cart.goods.gpic }}"></li>
@@ -102,7 +102,16 @@
 
 				setTimeout(function(){
 					$('.popup_con').fadeOut('fast',function(){
-						window.location.href = '/order/order_handle/';
+					    // 动画完成后发送POST请求
+						total_money = $('.total_pay b').text()
+                        cart_ids = ''
+                        $('.goods_list_td').each(function () {
+                            cart_ids = cart_ids+' '+$(this).attr('id')
+                        })
+                        cart_ids=cart_ids.trim(cart_ids)
+                        $.post('order_handle/',{'cart_ids':cart_ids,'total':total_money},function (data) {
+                            window.location.href = data.url;
+                        })
 					});	
 				},3000)
 				
@@ -117,7 +126,6 @@
             })
             total()
         })
-
 
 	</script>
 {% endblock search_frame %}
