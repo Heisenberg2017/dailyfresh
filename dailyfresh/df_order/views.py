@@ -101,6 +101,7 @@ def pay(request):
         oid_obj.save()
         print 3
         # 代码执行未出错保存提交
+        
         err = 1
         transaction.savepoint_commit(tran_id)
     except Exception as e:

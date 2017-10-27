@@ -6,8 +6,10 @@
         <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;{{ title }}</div>
         {%endif%}
 		<div class="search_con fl">
-			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
+            <form method="get" action="/index/search/">
+			<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+			<input type="submit" class="input_btn fr" name="" value="搜索">
+            </form>
 		</div>
         {%if page_style == 0 %}
         <div class="guest_cart fr">
@@ -15,7 +17,8 @@
 			<div class="goods_count fl" id="show_count">0</div>
 		</div>
         {%endif%}
-
+    <script>
+    </script>
 	</div>
 {% block search_frame%}
 {% endblock search_frame%}

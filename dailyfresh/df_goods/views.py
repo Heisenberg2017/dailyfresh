@@ -1,8 +1,11 @@
 # coding=utf-8
 from django.shortcuts import render
+
+from df_cars.models import CarInfo
 from models import TypeInfo,GoodsInfo
 from django.core.paginator import *
 from django.http import HttpResponse
+from haystack.views import SearchView
 
 
 def index(request):
@@ -91,3 +94,20 @@ def detail(request,gid):
 
     response.set_cookie('goods_ids', goods_ids)
     return response
+
+# 购物车数量为了返回购物车数字
+def cart_count(request):
+    if request.session.has_key('user_id'):
+        return CarInfo.object.filter(user_id = request.session['id'])
+    else:
+        return 0
+
+
+class MySearchView(SearchView):
+
+    def extra_context(self):
+        context = super(MySearchView, self).extra_context()
+        context['title'] = '搜索'
+        context['page_style'] = 1
+        context['cart_count'] = cart_count(self.request)
+        return context

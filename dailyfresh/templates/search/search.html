@@ -1,0 +1,45 @@
+{% extends 'df_goods/list.html' %}
+{% block head %}
+{#加入购物车动作#}
+{% endblock head%}
+
+{% block list_frame%}
+
+<div class="main_wrap clearfix">
+
+      <ul class="goods_type_list clearfix">
+        {% for good in page.object_list %}
+        <li>
+          <a href="/index/good{{good.object.id}}/"><img src="/static/{{good.object.gpic}}"></a>
+          <h4><a href="/index/good{{good.object.id}}/">{{good.object.gtitle}}</a></h4>
+          <div class="operate">
+        <span class="prize">￥{{good.object.gprice}}</span>
+        <span class="unit">{{good.object.gprice}}/{{good.object.gunit}}</span>
+{#          此页面加入购物车功能未做#}
+            {% if request.session.uname|default:'' != '' %}
+        <a href="javascript:;" class="add_goods" data-id="{{good.object.id}}" title="加入购物车"></a>
+            {% else %}
+            <a href="/user/login/" class="add_goods" data-id="{{good.object.id}}" title="加入购物车"></a>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="pagenation">
+        {% if page.has_previous %}
+        <a href="/index/search/?q={{query}}&amp;page={{page.previous_page_number}}">上一页</a>
+          {% endif %}
+          {% for index in page.paginator.page_range %}
+          {% if index == page.number %}
+          <a href="/index/search/?q={{query}}&amp;page={{index}}" class="active">{{index}}</a>
+          {% else %}
+          <a href="/index/search/?q={{query}}&amp;page={{index}}">{{index}}</a>
+          {% endif %}
+          {% endfor %}
+          {% if page.has_next %}
+          <a href="/index/search/?q={{query}}&amp;page={{page.next_page_number}}">下一页></a>
+          {% endif %}
+    </div>
+</div>
+{% endblock list_frame%}
