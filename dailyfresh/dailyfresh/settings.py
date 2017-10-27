@@ -25,10 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4jv%s-27=khjb(h6=w8bz3va7y%-)=yiu5c51+j$73vpkz@vi5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+# ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
-
+DEBUG = False
+ALLOWED_HOSTS=['*',]
 
 # Application definition
 
@@ -107,16 +108,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-# STATIC_ROOT='/var/www/test5/static/'
-STATIC_URL='/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
@@ -130,6 +121,23 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     }
 }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+STATIC_ROOT = '/var/www/dailyfresh/static/'
+# 静态文件移动后再注释STATIC_URL
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+
 
 # 自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
