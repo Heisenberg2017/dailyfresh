@@ -71,4 +71,4 @@ def order_handle(request):
         print '===========%s' % e
         transaction.savepoint_rollback(tran_id)
 
-    return JsonResponse({'url':'/user/order/'})
+    return JsonResponse({'url':'/user/order_1/'})

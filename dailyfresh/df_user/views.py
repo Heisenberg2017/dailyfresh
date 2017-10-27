@@ -1,5 +1,5 @@
 # coding=utf-8
-
+from django.core.paginator import Paginator
 from django.shortcuts import render,redirect;
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect;
 from hashlib import sha1;
@@ -141,14 +141,16 @@ def user_center_info(request):
 
 
 @user_decorator.login
-def user_center_order(request):
+def user_center_order(request,pindex):
     uid = request.session['id']
     user_order = OrderInfo.objects.filter(user_id=uid)
-    order_detail = user_order[0].orderdetailinfo_set.all()
-    # order_detail =OrderDetailInfo.objects.filter(order_id=user_order)
+
     print('uid:%s'%user_order)
-    print('order_detail:%s' % order_detail)
+    paginator = Paginator(user_order,'2')
+    page = paginator.page(pindex)
+    print('page.paginator:%s' % page.paginator)
     return render(request,'df_user/user_center_order.html',{
         'uid':user_order,
-        'order_detail':order_detail,
+        'page':page,
+
     })

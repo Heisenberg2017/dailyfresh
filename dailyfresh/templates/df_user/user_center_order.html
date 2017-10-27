@@ -12,7 +12,7 @@
 		</div>
 		<div class="right_content clearfix">
 				<h3 class="common_title2">全部订单</h3>
-                {% for uid in uid %}
+                {% for uid in page %}
 
 				<ul class="order_list_th w978 clearfix">
 					<li class="col01">{{ uid.odata }}</li>
@@ -46,17 +46,30 @@
 
 
 
-
+{#                分页#}
 
 				<div class="pagenation">
-					<a href="#">上一页</a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a href="#">下一页></a>
-				</div>
+				{%if page.has_previous%}
+				<a href="/user/order_{{page.number|add:'-1'}}/">上一页</a>
+				{%endif%}
+
+				{%for pages in page.paginator.page_range%}
+
+				<a href="/user/order_{{pages}}/"
+				   {%if pages == page.number%}
+				   class="active"
+				   {%endif%}
+				>{{pages}}</a>
+
+				{%endfor%}
+
+				{%if page.has_next%}
+				<a href="/user/order_{{page.number|add:'1'}}/">下一页</a>
+				{%endif%}
+
+			</div>
+
+
 		</div>
 	</div>
 {% endblock search_frame%}
