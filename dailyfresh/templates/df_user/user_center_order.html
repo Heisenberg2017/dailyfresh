@@ -17,7 +17,11 @@
 				<ul class="order_list_th w978 clearfix">
 					<li class="col01">{{ uid.odata }}</li>
 					<li class="col02">订单号: {{ uid.oid }}</li>
-					<li class="col02 stress">未支付</li>		
+					<li class="col02 stress">{% if uid.oIsPay == True %}
+                                    已支付
+                                {% else %}
+                                    已支付
+                                {% endif %}</li>
 				</ul>
 
 
@@ -36,9 +40,20 @@
                                 {% endfor %}
                             </td>
 
-							<td width="15%">33.60元</td>
-							<td width="15%">待付款</td>
-							<td width="15%"><a href="#" class="oper_btn">去付款</a></td>
+							<td width="15%">{{ uid.ototal }}元</td>
+							<td width="15%">
+                                {% if uid.oIsPay == True %}
+                                    交易完成
+                                {% else %}
+                                    待付款
+                                {% endif %}
+                            </td>
+							<td width="15%"><a href="javascript:pay({{ uid.oid }});" class="oper_btn">
+                                {% if uid.oIsPay == True %}
+                                    交易详情
+                                {% else %}
+                                    去付款
+                                {% endif %}</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -72,4 +87,20 @@
 
 		</div>
 	</div>
+    <script>
+    function pay(oid) {
+        if($(this).text()=="去付款"){
+            $.post('/order/pay/',{'oid':oid},function (data) {
+            if(data.err == '1'){
+                alert('支付成功')
+            }else{
+                alert('支付失败,请重试')
+            }
+            window.location.reload();
+        })
+        }else{
+            alert('详情功能未开发')
+        }
+    }
+    </script>
 {% endblock search_frame%}

@@ -143,11 +143,12 @@ def user_center_info(request):
 @user_decorator.login
 def user_center_order(request,pindex):
     uid = request.session['id']
-    user_order = OrderInfo.objects.filter(user_id=uid)
-
+    user_order = OrderInfo.objects.filter(user_id=uid).order_by('-oid')
+    print pindex
     print('uid:%s'%user_order)
     paginator = Paginator(user_order,'2')
     page = paginator.page(pindex)
+    print('page:%s' % page)
     print('page.paginator:%s' % page.paginator)
     return render(request,'df_user/user_center_order.html',{
         'uid':user_order,
