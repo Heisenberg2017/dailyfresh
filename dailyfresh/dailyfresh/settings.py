@@ -131,7 +131,8 @@ HAYSTACK_CONNECTIONS = {
 #     os.path.join(BASE_DIR, 'static')
 # ]
 STATIC_ROOT = '/var/www/dailyfresh/static/'
-# 静态文件移动后再注释STATIC_URL
+
+# 静态文件移动后再注释STATIC_URL:python manage.py collectstatic
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
