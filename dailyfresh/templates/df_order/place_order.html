@@ -111,6 +111,7 @@
                         cart_ids=cart_ids.trim(cart_ids)
                         $.post('order_handle/',{'cart_ids':cart_ids,'total':total_money},function (data) {
                             window.location.href = data.url;
+
                         })
 					});	
 				},3000)

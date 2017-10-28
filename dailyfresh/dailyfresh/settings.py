@@ -125,16 +125,18 @@ HAYSTACK_CONNECTIONS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-
-
+'''
+python manage.py collectstatic
+迁移过程中STATIC_ROOT：为我们使用的静态文件
+迁移过程中STATIC_URL：使用的模块例如 tinmyce
+迁移过程中注释的这两行代码会导致这两部分文件没有迁移过去
+'''
+# STATIC_URL = '/static/'
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static')
 # ]
+
 STATIC_ROOT = '/var/www/dailyfresh/static/'
-
-# 静态文件移动后再注释STATIC_URL:python manage.py collectstatic
-STATIC_URL = '/static/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 

@@ -48,7 +48,7 @@
                                     待付款
                                 {% endif %}
                             </td>
-							<td width="15%"><a href="javascript:pay({{ uid.oid }});" class="oper_btn">
+							<td width="15%"><a id="{{ uid.oid }}" href="javascript:pay({{ uid.oid }});" class="oper_btn">
                                 {% if uid.oIsPay == True %}
                                     交易详情
                                 {% else %}
@@ -89,7 +89,9 @@
 	</div>
     <script>
     function pay(oid) {
-        if($(this).text()=="去付款"){
+
+        var pay_but = $('#'+oid).text().trim()
+        if(pay_but == "去付款"){
             $.post('/order/pay/',{'oid':oid},function (data) {
             if(data.err == '1'){
                 alert('支付成功')
