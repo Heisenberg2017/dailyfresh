@@ -1,0 +1,137 @@
+[33mcommit 04f52cd8db520a61e71a44cebc33c8ec8bf4917a[m
+Author: laowang <289957126@qq.com>
+Date:   Thu Oct 26 22:14:39 2017 +0800
+
+    提交订单
+
+[33mcommit 4442cf427693f94634b01b18d7ac82bcdb472108[m
+Author: laowang <289957126@qq.com>
+Date:   Thu Oct 26 17:20:14 2017 +0800
+
+    提交订单
+
+[33mcommit a6b411a987f1c6ef56f9f5e2befe508579adc2c3[m
+Author: laowang <289957126@qq.com>
+Date:   Wed Oct 25 17:55:50 2017 +0800
+
+    购物车模块
+
+[33mcommit 6e71b13dbb5574d2c041d637a195c1da4fb91141[m
+Author: laowang <289957126@qq.com>
+Date:   Wed Oct 25 13:22:09 2017 +0800
+
+    购物车
+
+[33mcommit cab90b8082244f4efa129610d7332e77b575c6be[m
+Author: laowang <289957126@qq.com>
+Date:   Tue Oct 24 22:40:18 2017 +0800
+
+    购物车小计BUG未修复
+
+[33mcommit b61124a3b530c98b974845db368fdea110fb5730[m
+Author: laowang <289957126@qq.com>
+Date:   Tue Oct 24 18:55:32 2017 +0800
+
+    购物车
+
+[33mcommit 04e264e57f5b050542a13ad1ab5536c56e14e179[m
+Author: laowang <289957126@qq.com>
+Date:   Mon Oct 23 19:29:59 2017 +0800
+
+    浏览记录
+
+[33mcommit 694d0cab924214309267ba8f03e1d3be6699dafa[m
+Author: laowang <289957126@qq.com>
+Date:   Mon Oct 23 11:00:39 2017 +0800
+
+    总计金额的js
+
+[33mcommit 1dd6409a69688178496851794960eeed7e5268d4[m
+Author: laowang <289957126@qq.com>
+Date:   Sun Oct 22 21:47:24 2017 +0800
+
+    详细页更新
+
+[33mcommit 58f45707a87ca1f9bfcea8a178bdc385bf9654fd[m
+Author: laowang <289957126@qq.com>
+Date:   Sun Oct 22 13:37:53 2017 +0800
+
+    详细页
+
+[33mcommit e9337e797f9aa01590eb52ba4d4fd04b90618efb[m
+Author: laowang <289957126@qq.com>
+Date:   Sun Oct 22 12:01:31 2017 +0800
+
+    列表页
+
+[33mcommit 7d66df0652f24e490a07261a38428363b4b1c4ca[m
+Author: laowang <289957126@qq.com>
+Date:   Sat Oct 21 21:57:38 2017 +0800
+
+    主页
+
+[33mcommit e63b2bf26df507e2b91764b4be91a9e142ce9eef[m
+Author: laowang <289957126@qq.com>
+Date:   Sat Oct 21 21:45:43 2017 +0800
+
+    主页
+
+[33mcommit cd1e8f3f3f15d6e3f82ff6f8f216950b4bde1e92[m
+Author: laowang <289957126@qq.com>
+Date:   Fri Oct 20 21:15:55 2017 +0800
+
+    商品模型创建
+
+[33mcommit f6e492446e4201ad6a585e3a1df6783e72430e9e[m
+Author: laowang <289957126@qq.com>
+Date:   Thu Oct 19 16:07:16 2017 +0800
+
+    用户登陆，状态保持
+
+[33mcommit 5e25089d060a957eb4bf9e4be18632398483ffc2[m
+Author: laowang <289957126@qq.com>
+Date:   Wed Oct 18 21:00:21 2017 +0800
+
+    cookie
+
+[33mcommit 331b297e01e3c3dd26fa6e1a0c102055feb799d8[m
+Author: laowang <289957126@qq.com>
+Date:   Tue Oct 17 23:18:03 2017 +0800
+
+    登陆功能进行中
+
+[33mcommit 05473ab6ac5019fc118260d9b03fc0cc01f8de49[m
+Author: laowang <289957126@qq.com>
+Date:   Mon Oct 16 21:58:03 2017 +0800
+
+    登陆功能
+
+[33mcommit ac9d172e4abd5206f3cee737c5ae140054cbd039[m
+Author: laowang <289957126@qq.com>
+Date:   Mon Oct 16 17:12:17 2017 +0800
+
+    完善注册模块
+
+[33mcommit 9832e8f8099e89c7ef8a12584551fc2b22d87c91[m
+Author: laowang <289957126@qq.com>
+Date:   Sun Oct 15 22:14:15 2017 +0800
+
+    dailyfresh_demo第二天
+
+[33mcommit 1842166ea36fa9ab23d3a740ece13c200aed1dce[m
+Author: laowang <289957126@qq.com>
+Date:   Sat Oct 14 21:40:03 2017 +0800
+
+    django项目第一天
+
+[33mcommit 79d756c8ed20499b6dac96e392e1c9e6f43122c6[m
+Author: laowang <289957126@qq.com>
+Date:   Sat Oct 14 11:49:56 2017 +0800
+
+    new_django_project
+
+[33mcommit e425e2baeb55c843f01b4774182701820386a837[m
+Author: Heisenberg2017 <289957126@qq.com>
+Date:   Sat Oct 14 11:46:57 2017 +0800
+
+    Initial commit
