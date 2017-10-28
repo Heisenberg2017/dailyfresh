@@ -61,8 +61,12 @@ def order_handle(request):
             cart = CarInfo.objects.get(id=id1)
             goods = cart.goods
             # 判断库存
-            if goods.gkucun >= cart.goods.gkucun:
+            print goods.gkucun
+            if goods.gkucun >= cart.count:
                 goods.gkucun = cart.goods.gkucun - cart.count
+
+                print cart.count
+                print goods.gkucun
                 goods.save()
 
                 detail.goods_id = goods.id
@@ -72,6 +76,7 @@ def order_handle(request):
 
                 cart.delete()
             else:
+
                 transaction.savepoint_rollback(tran_id)
                 return JsonResponse({'url':'/carts/'})
 
@@ -94,12 +99,9 @@ def pay(request):
         oid = request.POST.get('oid')
         print ("订单号:%s" % oid)
         oid_obj = OrderInfo.objects.get(oid=int(oid))
-        print 1
         print ("oid_obj:%s" % oid_obj)
         oid_obj.oIsPay = True
-        print 2
         oid_obj.save()
-        print 3
         # 代码执行未出错保存提交
         
         err = 1
