@@ -1,2 +1,2 @@
 # dailyfresh
-project_demo
+Django
