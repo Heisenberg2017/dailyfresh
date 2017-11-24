@@ -19,15 +19,15 @@ from django.views.decorators.csrf import csrf_exempt;
 
 
 def register(request):
+    """注册页"""
     title = '天天生鲜-注册'
     return render(request, 'df_user/register.html',{'title':title})
-# 注册板块
 
 
 def login(request):
+    """登陆页"""
     title = '天天生鲜-登陆'
     return render(request, 'df_user/login.html',{'title':title})
-# 登陆板块
 
 
 def login_out(request):
@@ -37,16 +37,17 @@ def login_out(request):
 
 
 def uname_check(request):
+    """用户名验证"""
     # 获取用户输入uname
     check_uname = request.POST.get('check_uname')
     # 检验数据库中是否有相同uname
     check_result = UserInfo.objects.filter(uname=check_uname).exists()
     # 若数据库中存在则返回True
     return JsonResponse({'check':check_result})
-# 用户名验证
 
 
 def login_check(request):
+    """登陆验证"""
     post = request.POST
     login_name = post.get("username")
     login_pwd = post.get("pwd")
@@ -93,13 +94,9 @@ def login_check(request):
         content = {'title': '用户登陆', 'error_name': 1, 'error_pwd': 0}
         return render(request,'df_user/login.html',content)
 
-    # 相同则登陆页面自动跳转到登陆页面（先判断用户名是否存在）
-
-    # 不同提示账号密码错误
-# 登陆验证
-
 
 def register_handle(request):
+    """注册验证"""
     # 获取注册信息
     post = request.POST
     uname = post.get('user_name')
@@ -124,11 +121,12 @@ def register_handle(request):
 
     else:
         return redirect('/user/register/')
-# 注册验证
+
 
 
 @user_decorator.login
 def user_center_info(request):
+    """用户中心"""
     rec_bro = request.COOKIES.get('goods_ids', '')
     rec_good =[]
     rec_list = rec_bro.split(',')
@@ -137,7 +135,7 @@ def user_center_info(request):
             good_obj=GoodsInfo.objects.get(pk=int(good))
             rec_good.append(good_obj)
     return render(request, 'df_user/user_center_info.html',{'page_style':0,'rec_good':rec_good})
-# 用户中心
+
 
 
 @user_decorator.login

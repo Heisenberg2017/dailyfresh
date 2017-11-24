@@ -7,11 +7,7 @@ from df_user import user_decorator
 from django.http import JsonResponse
 from datetime import datetime
 from decimal import Decimal
-'''
-print(oid_obj)时代码报错，原因：？
-报错信息：'ascii' codec can't decode byte 0xe8 in position 0: ordinal not in range(128)
-引入下面代码解决
-'''
+
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -30,10 +26,10 @@ def order(request):
         'page_style': 1, 'title': '提交订单', 'carts_obj': carts_obj, 'index': index
     })
 
-# 呈现订单页
 @transaction.atomic()
 @user_decorator.login
 def order_handle(request):
+    """呈现订单页"""
     # 保存一个点
     tran_id = transaction.savepoint()
 

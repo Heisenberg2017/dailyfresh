@@ -4,16 +4,15 @@ from tinymce.models import HTMLField
 
 
 class TypeInfo(models.Model):
-    # 商品类型
+    """商品类型"""
     ttitle = models.CharField(max_length=20)
     isDelete = models.BooleanField(default=False)
-
     def __str__(self):
         return self.ttitle.encode('utf-8')
 
 
 class GoodsInfo(models.Model):
-    # 商品信息
+    """商品信息"""
     gtitle = models.CharField(max_length=20)
     gpic = models.ImageField(upload_to='df_goods')
     gprice = models.DecimalField(max_digits=5,decimal_places=2)

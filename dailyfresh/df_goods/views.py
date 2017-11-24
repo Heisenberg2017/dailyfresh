@@ -9,7 +9,7 @@ from haystack.views import SearchView
 
 
 def index(request):
-    # 记录登陆状态
+    """首页""" 
     myname = request.session.get('myname')
     id = request.session.get('id')
 
