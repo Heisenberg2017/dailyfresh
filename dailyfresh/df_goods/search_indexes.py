@@ -4,6 +4,7 @@ from models import GoodsInfo
 
 
 class GoodsInfoIndex(indexes.SearchIndex, indexes.Indexable):
+    """全文检索"""
     text = indexes.CharField(document=True, use_template=True)
 
     def get_model(self):

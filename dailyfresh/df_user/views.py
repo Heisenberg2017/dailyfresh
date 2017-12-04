@@ -31,6 +31,7 @@ def login(request):
 
 
 def login_out(request):
+    """退出登陆"""
     request.session.flush()
     response = HttpResponseRedirect('/index/')
     return response
@@ -123,7 +124,6 @@ def register_handle(request):
         return redirect('/user/register/')
 
 
-
 @user_decorator.login
 def user_center_info(request):
     """用户中心"""
@@ -137,9 +137,9 @@ def user_center_info(request):
     return render(request, 'df_user/user_center_info.html',{'page_style':0,'rec_good':rec_good})
 
 
-
 @user_decorator.login
 def user_center_order(request,pindex):
+    """用户中心订单页"""
     uid = request.session['id']
     user_order = OrderInfo.objects.filter(user_id=uid).order_by('-oid')
     print pindex

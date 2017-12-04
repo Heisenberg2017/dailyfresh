@@ -1,3 +1,4 @@
+# coding:utf-8
 """dailyfresh URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,10 +19,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^user/', include('df_user.urls')),
-    url(r'^index/',include('df_goods.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^carts/', include('df_cars.urls')),
-    url(r'^order/', include('df_order.urls')),
+    url(r'^user/', include('df_user.urls')),    # 用户管理功能部分
+    url(r'^index/',include('df_goods.urls')),   # 商品展示功能部分
+    url(r'^tinymce/', include('tinymce.urls')), # 富文本编辑器
+    url(r'^carts/', include('df_cars.urls')),   # 购物车功能部分
+    url(r'^order/', include('df_order.urls')),  # 订单功能部分
     # url(r'^search/', include('haystack.urls')),
 ]

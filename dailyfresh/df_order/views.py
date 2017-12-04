@@ -15,6 +15,7 @@ sys.setdefaultencoding('utf-8')
 
 @user_decorator.login
 def order(request):
+    """订单页"""
     carts = request.GET.getlist('cart_id')
     index = range(1, len(carts))
     carts_obj = []
@@ -29,8 +30,8 @@ def order(request):
 @transaction.atomic()
 @user_decorator.login
 def order_handle(request):
-    """呈现订单页"""
-    # 保存一个点
+    """提交订单"""
+    # 保存一个点(django中的事务)
     tran_id = transaction.savepoint()
 
     cart_ids = str(request.POST.get('cart_ids'))
@@ -87,6 +88,7 @@ def order_handle(request):
 @transaction.atomic()
 @user_decorator.login
 def pay(request):
+    """订单支付"""
     # 保存一个点
     err = 0
     tran_id = transaction.savepoint()

@@ -39,11 +39,12 @@ def index(request):
 
 
 def good_list(request, tid, pindex, sort):
-    # 最新的两条goods
+    """商品列表页"""
+    # 筛选最新的两条商品信息用于展示
     typeinfo = TypeInfo.objects.get(pk=int(tid))
     news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
 
-    # goods排序
+    # 商品列表排序
     if sort == '1':
         goods_list = GoodsInfo.objects.filter(gtype_id=int(tid)).order_by('-id')
     elif sort == '2':
@@ -66,10 +67,11 @@ def good_list(request, tid, pindex, sort):
 
 
 def detail(request,gid):
+    """商品详情页"""
     good = GoodsInfo.objects.get(pk=int(gid))
     typeinfo = TypeInfo.objects.get(pk=int(good.gtype_id))
     news = typeinfo.goodsinfo_set.order_by('-id')[0:2]
-    # 记录用户点击动作(有用户刷人气问题)
+    # 记录用户点击动作
     good.gclick += 1
     good.save()
 
@@ -95,8 +97,9 @@ def detail(request,gid):
     response.set_cookie('goods_ids', goods_ids)
     return response
 
-# 购物车数量为了返回购物车数字
+
 def cart_count(request):
+    """返回购物车内的商品数目"""
     if request.session.has_key('user_id'):
         return CarInfo.object.filter(user_id = request.session['id'])
     else:
@@ -104,7 +107,7 @@ def cart_count(request):
 
 
 class MySearchView(SearchView):
-
+    """搜索结果展示页"""
     def extra_context(self):
         context = super(MySearchView, self).extra_context()
         context['title'] = '搜索'
